@@ -48,7 +48,7 @@ export const api = {
   getAvailableItems: () => request('/items/user/available'),
 
   // Exchanges
-  createExchange: (data: { requested_item_id: number; offered_item_id: number }) =>
+  createExchange: (data: { requested_item_id: number; offered_item_id: number; message?: string }) =>
     request('/exchanges', { method: 'POST', body: JSON.stringify(data) }),
   getSentExchanges: () => request('/exchanges/sent'),
   getReceivedExchanges: () => request('/exchanges/received'),

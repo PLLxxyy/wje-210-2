@@ -195,6 +195,19 @@ export default function Profile({ user, setUser, onViewItem, onPublish, showToas
                         {statusLabels[ex.status]?.text}
                       </span>
                     </div>
+                    {ex.message && (
+                      <div style={{
+                        padding: '10px 14px',
+                        background: '#fffbeb',
+                        borderRadius: 8,
+                        marginBottom: 12,
+                        fontSize: 14,
+                        color: '#92400e',
+                        borderLeft: '3px solid #f59e0b',
+                      }}>
+                        💬 {ex.message}
+                      </div>
+                    )}
                     <div className="exchange-items">
                       <div className="exchange-item">
                         <div className="item-name">{ex.offered_title}</div>
@@ -231,6 +244,19 @@ export default function Profile({ user, setUser, onViewItem, onPublish, showToas
                         {statusLabels[ex.status]?.text}
                       </span>
                     </div>
+                    {ex.message && (
+                      <div style={{
+                        padding: '10px 14px',
+                        background: '#eff6ff',
+                        borderRadius: 8,
+                        marginBottom: 12,
+                        fontSize: 14,
+                        color: '#1e40af',
+                        borderLeft: '3px solid #3b82f6',
+                      }}>
+                        💬 {ex.message}
+                      </div>
+                    )}
                     <div className="exchange-items">
                       <div className="exchange-item">
                         <div className="item-name">{ex.offered_title}</div>
@@ -259,6 +285,19 @@ export default function Profile({ user, setUser, onViewItem, onPublish, showToas
                       <div className="exchange-person">与 {ex.partner_name} 的交换</div>
                       <span className="exchange-status status-accepted">已完成</span>
                     </div>
+                    {ex.message && (
+                      <div style={{
+                        padding: '10px 14px',
+                        background: '#f5f3ff',
+                        borderRadius: 8,
+                        marginBottom: 12,
+                        fontSize: 14,
+                        color: '#5b21b6',
+                        borderLeft: '3px solid #8b5cf6',
+                      }}>
+                        💬 {ex.message}
+                      </div>
+                    )}
                     <div className="exchange-items">
                       <div className="exchange-item">
                         <div className="item-name">{ex.offered_title}</div>

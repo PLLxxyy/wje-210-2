@@ -38,6 +38,7 @@ db.exec(`
     requested_item_id INTEGER NOT NULL,
     offered_item_id INTEGER NOT NULL,
     status TEXT DEFAULT 'pending',
+    message TEXT DEFAULT '',
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (requester_id) REFERENCES users(id),
@@ -45,6 +46,9 @@ db.exec(`
     FOREIGN KEY (requested_item_id) REFERENCES items(id),
     FOREIGN KEY (offered_item_id) REFERENCES items(id)
   );
+
+  -- 迁移：添加 message 字段到 exchanges 表
+  ALTER TABLE exchanges ADD COLUMN IF NOT EXISTS message TEXT DEFAULT '';
 
   CREATE TABLE IF NOT EXISTS ratings (
     id INTEGER PRIMARY KEY AUTOINCREMENT,

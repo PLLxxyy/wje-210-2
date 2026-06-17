@@ -16,6 +16,7 @@ export default function ItemDetail({ itemId, user, onBack, onNeedLogin, showToas
   const [showExchangeModal, setShowExchangeModal] = useState(false);
   const [myItems, setMyItems] = useState<Item[]>([]);
   const [selectedMyItem, setSelectedMyItem] = useState<number | null>(null);
+  const [exchangeMessage, setExchangeMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -27,6 +28,7 @@ export default function ItemDetail({ itemId, user, onBack, onNeedLogin, showToas
     try {
       const items = await api.getAvailableItems();
       setMyItems(items);
+      setExchangeMessage('');
       setShowExchangeModal(true);
     } catch (err: any) {
       showToast(err.message, 'error');
@@ -37,7 +39,11 @@ export default function ItemDetail({ itemId, user, onBack, onNeedLogin, showToas
     if (!selectedMyItem || !item) return;
     setSubmitting(true);
     try {
-      await api.createExchange({ requested_item_id: item.id, offered_item_id: selectedMyItem });
+      await api.createExchange({
+        requested_item_id: item.id,
+        offered_item_id: selectedMyItem,
+        message: exchangeMessage,
+      });
       showToast('交换请求已发送');
       setShowExchangeModal(false);
     } catch (err: any) {
@@ -150,7 +156,20 @@ export default function ItemDetail({ itemId, user, onBack, onNeedLogin, showToas
                     <div style={{ fontSize: 13, color: '#888', marginTop: 4 }}>{mi.description}</div>
                   </div>
                 ))}
-                <div style={{ display: 'flex', gap: 10, marginTop: 20 }}>
+                <div className="form-group" style={{ marginTop: 12 }}>
+                  <textarea
+                    className="form-textarea"
+                    value={exchangeMessage}
+                    onChange={e => setExchangeMessage(e.target.value)}
+                    placeholder="给物主留言（选填），例如：很喜欢这个物品，希望能和你交换~"
+                    rows={3}
+                    maxLength={200}
+                  />
+                  <div style={{ textAlign: 'right', fontSize: 12, color: '#aaa', marginTop: 4 }}>
+                    {exchangeMessage.length}/200
+                  </div>
+                </div>
+                <div style={{ display: 'flex', gap: 10, marginTop: 16 }}>
                   <button className="btn btn-secondary" style={{ flex: 1 }} onClick={() => setShowExchangeModal(false)}>取消</button>
                   <button className="btn btn-primary" style={{ flex: 1 }} disabled={!selectedMyItem || submitting} onClick={submitExchange}>
                     {submitting ? '发送中...' : '确认交换'}

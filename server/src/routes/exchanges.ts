@@ -7,7 +7,7 @@ const router = Router();
 // 发起交换请求
 router.post('/', authMiddleware, (req: AuthRequest, res: Response) => {
   try {
-    const { requested_item_id, offered_item_id } = req.body;
+    const { requested_item_id, offered_item_id, message } = req.body;
     if (!requested_item_id || !offered_item_id) {
       return res.status(400).json({ error: '请选择要交换的物品' });
     }
@@ -26,8 +26,8 @@ router.post('/', authMiddleware, (req: AuthRequest, res: Response) => {
     if (existing) return res.status(400).json({ error: '已发送过相同请求' });
 
     const result = db.prepare(
-      'INSERT INTO exchanges (requester_id, owner_id, requested_item_id, offered_item_id) VALUES (?, ?, ?, ?)'
-    ).run(req.userId, requestedItem.user_id, requested_item_id, offered_item_id);
+      'INSERT INTO exchanges (requester_id, owner_id, requested_item_id, offered_item_id, message) VALUES (?, ?, ?, ?, ?)'
+    ).run(req.userId, requestedItem.user_id, requested_item_id, offered_item_id, message || '');
 
     const exchange = db.prepare('SELECT * FROM exchanges WHERE id = ?').get(result.lastInsertRowid);
     res.json(exchange);

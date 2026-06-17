@@ -29,6 +29,7 @@ export interface Exchange {
   requested_item_id: number;
   offered_item_id: number;
   status: 'pending' | 'accepted' | 'rejected';
+  message: string;
   created_at: string;
   updated_at: string;
   requested_title?: string;
